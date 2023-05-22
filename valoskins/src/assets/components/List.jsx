@@ -1,40 +1,36 @@
-import { useEffect, useState } from "react";
+/* eslint-disable react/prop-types */
 import Card from "./Card";
+import { useParams } from "react-router-dom";
 
-const List = () => {
-    const [skins, setSkins] = useState([]);
+const List = ({ skins }) => {
+    console.log(useParams());
+    let params = useParams();
 
-    const fetchData = async (url) => {
-        const response = await fetch(url);
-        let data = await response.json();
-        setSkins(
-            data["data"].filter((skin) => {
-                return (
-                    skin["displayName"].includes("Phantom") &&
-                    !skin["displayName"].includes("Standard")
-                );
-            })
+    skins = skins.filter((skin) => {
+        return (
+            skin["displayName"].includes(params["type"]) &&
+            !skin["displayName"].includes("Standard")
         );
-    };
-
-    useEffect(() => {
-        fetchData("https://valorant-api.com/v1/weapons/skins");
-    }, []);
+    });
 
     let count = 0;
 
     return (
-        <>
+        <div className="skin-list">
             {skins.map((skin) => {
                 return (
                     <Card
                         key={count++}
-                        img={skin["displayIcon"]}
+                        img={
+                            skin["displayIcon"] ||
+                            skin["levels"][0]["displayIcon"]
+                        }
                         name={skin["displayName"]}
+                        link={skin["uuid"]}
                     ></Card>
                 );
             })}
-        </>
+        </div>
     );
 };
 
