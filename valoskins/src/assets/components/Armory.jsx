@@ -14,22 +14,20 @@ const Armory = ({ skins }) => {
     });
 
     let weaponsOrder = {
-        sidearms: ["Classic", "Shorty", "Frenzy", "Ghost", "Sheriff"],
-        smg: ["Stinger", "Spectre"],
-        shotguns: ["Bucky", "Judge"],
-        rifles: ["Bulldog", "Guardian", "Phantom", "Vandal"],
-        snipers: ["Marshal", "Operator"],
-        machineguns: ["Ares", "Odin"],
+        1: ["Classic", "Shorty", "Frenzy", "Ghost", "Sheriff"],
+        2: ["Stinger", "Spectre", "Bucky", "Judge"],
+        3: ["Bulldog", "Guardian", "Phantom", "Vandal"],
+        4: ["Marshal", "Operator", "Ares", "Odin"],
     };
 
     let count = 0;
 
     return (
         <div className="armory">
-            {Object.keys(weaponsOrder).map((category) => {
+            {Object.keys(weaponsOrder).map((column) => {
                 return (
-                    <div className={category} key={count++}>
-                        {weaponsOrder[category].map((weapon) => {
+                    <div className="armory-col" key={count++}>
+                        {weaponsOrder[column].map((weapon) => {
                             return (
                                 <Card
                                     key={weapon}
@@ -41,24 +39,16 @@ const Armory = ({ skins }) => {
                     </div>
                 );
             })}
-        </div>
-    );
 
-    /*
-    return (
-        <div className="armory">
-            <div className="sideArms">
-                {weaponsOrder.sidearms.map((weapon) => {
-                    return (
-                        <Card
-                            key={weapon}
-                            img={map.get("Standard " + weapon)}
-                        ></Card>
-                    );
-                })}
+            <div className="armory-knife">
+                <Card
+                    key={"Melee"}
+                    img={map.get("Melee")}
+                    link={"Melee"}
+                ></Card>
             </div>
         </div>
-    );*/
+    );
 };
 
 export default Armory;

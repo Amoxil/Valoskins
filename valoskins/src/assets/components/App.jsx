@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import List from "./List";
 import Armory from "./Armory";
@@ -7,6 +7,8 @@ import Skin from "./Skin";
 
 function App() {
     const [skins, setSkins] = useState([]);
+
+    const navigate = useNavigate();
 
     const fetchData = async (url) => {
         const response = await fetch(url);
@@ -25,18 +27,37 @@ function App() {
     });
 
     return (
-        <Routes>
-            <Route path="/" element={<Armory skins={skins} />}></Route>
-            <Route
-                exact
-                path="/:type"
-                element={<List weapType="Vandal" skins={skins} />}
-            ></Route>
-            <Route
-                path="/:type/:uuid"
-                element={<Skin skinsMap={skinsMap} />}
-            ></Route>
-        </Routes>
+        <>
+            <nav>
+                <ul>
+                    <li onClick={() => navigate(-1)}>
+                        <a> Back </a>
+                    </li>
+                    <li onClick={() => navigate("/")}>
+                        <a> Home </a>
+                    </li>
+                    <li>
+                        <a> About </a>
+                    </li>
+                    <li>
+                        <a> Search </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <Routes>
+                <Route path="/" element={<Armory skins={skins} />}></Route>
+                <Route
+                    exact
+                    path="/:type"
+                    element={<List weapType="Vandal" skins={skins} />}
+                ></Route>
+                <Route
+                    path="/:type/:uuid"
+                    element={<Skin skinsMap={skinsMap} />}
+                ></Route>
+            </Routes>
+        </>
     );
 }
 

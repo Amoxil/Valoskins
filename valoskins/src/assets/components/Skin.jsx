@@ -11,25 +11,25 @@ const Skin = ({ skinsMap }) => {
 
     console.log(skinsMap.get(params["uuid"]));
     return (
-        <>
-            <h1> {skin.displayName} </h1>
+        <div className="skin-wrapper">
             <div className="skin-show">
+                <h1> {skin.displayName} </h1>
+                <div className="skin-levels">
+                    {skin["levels"].slice(1).map((level) => {
+                        return (
+                            <button
+                                key={level["uuid"]}
+                                onClick={() => {
+                                    setIsVideo(true);
+                                    setMedia(level["streamedVideo"]);
+                                }}
+                            >
+                                {level["displayName"]}
+                            </button>
+                        );
+                    })}
+                </div>
                 <div className="skin-chromas">
-                    <div className="skin-levels">
-                        {skin["levels"].slice(1).map((level) => {
-                            return (
-                                <button
-                                    key={level["uuid"]}
-                                    onClick={() => {
-                                        setIsVideo(true);
-                                        setMedia(level["streamedVideo"]);
-                                    }}
-                                >
-                                    {level["displayName"]}
-                                </button>
-                            );
-                        })}
-                    </div>
                     {skin["chromas"].map((chroma) => {
                         return (
                             <img
@@ -43,6 +43,8 @@ const Skin = ({ skinsMap }) => {
                         );
                     })}
                 </div>
+            </div>
+            <div className="skin-media">
                 {isVideo ? (
                     <video
                         controls
@@ -55,7 +57,7 @@ const Skin = ({ skinsMap }) => {
                     <img src={media} alt="" />
                 )}
             </div>
-        </>
+        </div>
     );
 };
 

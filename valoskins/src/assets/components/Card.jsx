@@ -5,11 +5,13 @@ const Card = ({ img, name, link, price }) => {
     return (
         <article className="card">
             <Link to={"./" + link}>
-                <img src={img} alt="" />
-                <p>
-                    {name}
-                    {price}
-                </p>
+                <img src={img} alt="" loading="lazy" />
+                {(name || price) && (
+                    <p>
+                        {name}
+                        {price}
+                    </p>
+                )}
             </Link>
         </article>
     );
