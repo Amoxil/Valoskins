@@ -23,7 +23,7 @@ const Armory = ({ skins }) => {
     let count = 0;
 
     return (
-        <div className="armory">
+        <div className="armory fade-in">
             {Object.keys(weaponsOrder).map((column) => {
                 return (
                     <div className="armory-col" key={count++}>

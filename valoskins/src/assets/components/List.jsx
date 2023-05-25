@@ -10,10 +10,21 @@ const List = ({ skins }) => {
     let params = useParams();
 
     skins = skins.filter((skin) => {
+        if (params["type"] === "All")
+            return (
+                !skin["assetPath"].includes("Random") &&
+                skin["displayName"]
+                    .toLowerCase()
+                    .includes(searchText.toLowerCase())
+            );
+
         if (params["type"] === "Melee") {
             return (
                 skin["assetPath"].includes("Melee") &&
-                !skin["assetPath"].includes("Random")
+                !skin["assetPath"].includes("Random") &&
+                skin["displayName"]
+                    .toLowerCase()
+                    .includes(searchText.toLowerCase())
             );
         } else {
             return (
@@ -34,7 +45,7 @@ const List = ({ skins }) => {
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
             />
-            <div className="skin-list">
+            <div className="skin-list fade-in">
                 {skins.map((skin) => {
                     return (
                         <Card

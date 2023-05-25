@@ -4,9 +4,12 @@ import "./App.css";
 import List from "./List";
 import Armory from "./Armory";
 import Skin from "./Skin";
+import Loader from "./Loader";
+import Home from "./Home";
 
 function App() {
     const [skins, setSkins] = useState([]);
+    const [skinsMap, setSkinsMap] = useState(new Map());
 
     const navigate = useNavigate();
 
@@ -20,11 +23,15 @@ function App() {
         fetchData("https://valorant-api.com/v1/weapons/skins");
     }, []);
 
-    let skinsMap = new Map();
+    useEffect(() => {
+        let sMap = new Map();
 
-    skins.map((skin) => {
-        skinsMap.set(skin["uuid"], skin);
-    });
+        skins.map((skin) => {
+            sMap.set(skin["uuid"], skin);
+        });
+        setSkinsMap(sMap);
+        console.log(skinsMap);
+    }, [skins]);
 
     return (
         <>
@@ -36,25 +43,37 @@ function App() {
                     <li onClick={() => navigate("/")}>
                         <a> Home </a>
                     </li>
+                    <li onClick={() => navigate("/Armory")}>
+                        <a> Armory </a>
+                    </li>
+                    <li onClick={() => navigate("/Armory/All")}>
+                        <a> All skins </a>
+                    </li>
                     <li>
                         <a> About </a>
                     </li>
-                    <li>
-                        <a> Search </a>
-                    </li>
                 </ul>
             </nav>
-
             <Routes>
-                <Route path="/" element={<Armory skins={skins} />}></Route>
+                <Route path="/" element={<Home />}></Route>
                 <Route
-                    exact
-                    path="/:type"
-                    element={<List weapType="Vandal" skins={skins} />}
+                    path="/Armory"
+                    element={<Armory skins={skins} />}
                 ></Route>
                 <Route
-                    path="/:type/:uuid"
-                    element={<Skin skinsMap={skinsMap} />}
+                    exact
+                    path="Armory/:type"
+                    element={<List skins={skins} />}
+                ></Route>
+                <Route
+                    path="Armory/:type/:uuid"
+                    element={
+                        skinsMap.size > 0 ? (
+                            <Skin skinsMap={skinsMap} />
+                        ) : (
+                            <h1> Loading ... </h1>
+                        )
+                    }
                 ></Route>
             </Routes>
         </>

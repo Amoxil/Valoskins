@@ -5,6 +5,26 @@
     text-align: center;
     align-items: center;
     justify-content: center;
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 1s ease;
+}
+
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 * {
@@ -17,7 +37,7 @@ nav {
     top: 0;
     justify-content: space-between;
     align-items: center;
-    background-color: #101010;
+    background-color: #1a1a1a;
     width: 100vw;
 }
 
@@ -26,6 +46,7 @@ nav ul li {
     display: inline-block;
     padding: 10px 20px;
     cursor: pointer;
+    color: white;
 }
 
 .armory {
@@ -33,7 +54,7 @@ nav ul li {
     flex-direction: row;
     margin: 0 10% 0 10%;
     height: 90vh;
-    max-width: 150vh;
+    max-width: 130vh;
 }
 
 .armory-col {
@@ -67,7 +88,7 @@ nav ul li {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    width: 100vw;
+    width: 95vw;
 }
 
 .card {
@@ -85,7 +106,7 @@ nav ul li {
     padding: 30px;
 }
 
-.card img {
+img {
     max-height: 100%;
     max-width: 100%;
 }
@@ -98,7 +119,7 @@ nav ul li {
 .skin-wrapper {
     display: flex;
     flex-direction: row;
-    height: 100vh;
+    height: 90vh;
     margin: 0 10% 0 10%;
     align-items: center;
 }
@@ -122,13 +143,14 @@ nav ul li {
     flex-direction: row;
     align-items: center;
     width: 100%;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .skin-chromas img {
     cursor: pointer;
     width: 20%;
     border-radius: 15px;
+    margin-left: 5%;
 }
 
 .skin-levels {
@@ -144,4 +166,30 @@ nav ul li {
 .video-level {
     width: 100%;
     border-radius: 15px;
+}
+
+.home-button {
+    position: relative;
+    width: fit-content;
+    margin: 15px;
+    padding: 15px 30px;
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    color: white;
+    background: transparent;
+    cursor: pointer;
+    transition: ease-out 0.5s;
+    border: 2px solid white;
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 0 #725ac1;
+}
+
+.home-button:hover {
+    box-shadow: inset 0 -100px 0 0 #725ac1;
+}
+
+.home-button:active {
+    transform: scale(0.9);
 }
