@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+
 import List from "./List";
 import Armory from "./Armory";
 import Skin from "./Skin";
@@ -10,6 +13,7 @@ import Home from "./Home";
 function App() {
     const [skins, setSkins] = useState([]);
     const [skinsMap, setSkinsMap] = useState(new Map());
+    const location = useLocation();
 
     const navigate = useNavigate();
 
@@ -37,9 +41,17 @@ function App() {
         <>
             <nav>
                 <ul>
-                    <li onClick={() => navigate(-1)}>
-                        <a> Back </a>
-                    </li>
+                    {location.pathname === "/" ? (
+                        " "
+                    ) : (
+                        <li onClick={() => navigate(-1)}>
+                            <a>
+                                {" "}
+                                <FontAwesomeIcon icon={faArrowLeft} />{" "}
+                            </a>
+                        </li>
+                    )}
+
                     <li onClick={() => navigate("/")}>
                         <a> Home </a>
                     </li>
@@ -50,7 +62,9 @@ function App() {
                         <a> All skins </a>
                     </li>
                     <li>
-                        <a> About </a>
+                        <a href="https://github.com/Amoxil">
+                            <i className="fa-brands fa-github"></i>
+                        </a>
                     </li>
                 </ul>
             </nav>

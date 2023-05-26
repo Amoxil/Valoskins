@@ -14,7 +14,7 @@ const Skin = ({ skinsMap }) => {
     const SkinLevels = () => {
         return (
             <div className="skin-levels">
-                {Object.keys(skin["levels"].slice(1)).length > 1 ? (
+                {Object.keys(skin["levels"].slice(1)).length > 0 ? (
                     skin["levels"].slice(1).map((level) => {
                         return (
                             <button
