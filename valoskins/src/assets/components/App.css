@@ -45,6 +45,7 @@ nav {
     align-items: center;
     background-color: var(--background-color);
     width: 100vw;
+    z-index: 1;
 }
 
 nav ul {
@@ -67,6 +68,16 @@ nav ul li:last-child {
 
 nav i {
     font-size: 2rem;
+}
+
+footer {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    align-items: flex-end;
+    background-color: var(--background-color);
+    width: 100vw;
+    z-index: 1;
 }
 
 .armory {

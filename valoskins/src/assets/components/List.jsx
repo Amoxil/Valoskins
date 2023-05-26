@@ -3,6 +3,7 @@ import { useState } from "react";
 import Card from "./Card";
 import { useParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
+import LazyList from "./LazyList";
 import SE from "../images/SE.png";
 import PE from "../images/PE.png";
 import DE from "../images/DE.png";
@@ -11,7 +12,9 @@ import XE from "../images/XE.png";
 
 const List = ({ skins }) => {
     const [searchText, setSearchText] = useState("");
-    const [hasMore, setHasMore] = useState(false);
+    const [page, setPage] = useState(1);
+    const itemsPerPage = 50;
+    let hasMore = true;
 
     const tiersUuid = [
         [SE, "12683d76-48d7-84a3-4e09-6985794f0445"],
@@ -38,8 +41,6 @@ const List = ({ skins }) => {
             setTiers(updatedArray);
         }
     };
-
-    console.log(useParams());
     let params = useParams();
 
     skins = skins.filter((skin) => {
@@ -63,8 +64,6 @@ const List = ({ skins }) => {
         }
     });
 
-    let count = 0;
-
     return (
         <>
             <div className="tier-filter">
@@ -86,21 +85,19 @@ const List = ({ skins }) => {
                     );
                 })}
             </div>
-            <div className="skin-list fade-in">
-                {skins.map((skin) => {
-                    return (
-                        <Card
-                            key={count++}
-                            img={
-                                skin["displayIcon"] ||
-                                skin["levels"][0]["displayIcon"]
-                            }
-                            name={skin["displayName"]}
-                            link={skin["uuid"]}
-                        ></Card>
-                    );
-                })}
-            </div>
+
+            <InfiniteScroll
+                dataLength={
+                    Object.keys(skins.slice(0, page * itemsPerPage)).length
+                }
+                next={() => setPage(page + 1)}
+                hasMore={true}
+                className="skin-list fade-in"
+            >
+                <LazyList
+                    skins={skins.slice(0, page * itemsPerPage)}
+                ></LazyList>
+            </InfiniteScroll>
         </>
     );
 };

@@ -5,7 +5,7 @@ const Card = ({ img, name, link, price }) => {
     return (
         <article className="card">
             <Link to={"./" + link}>
-                <img src={img} alt="" loading="lazy" />
+                <img src={img} alt="" />
                 {(name || price) && (
                     <p>
                         {name}
