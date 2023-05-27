@@ -3,14 +3,17 @@ import { useRef, useState } from "react";
 import { useParams } from "react-router";
 
 const Skin = ({ skinsMap }) => {
-    console.log(skinsMap);
     const params = useParams();
-    const mediaRef = useRef(null);
 
+    //Gets the uuid from the param and searches it in the hashmap
     const skin = skinsMap.get(params["uuid"]);
+
+    //Sets the current media as the default skin
     const [media, setMedia] = useState(skin["chromas"][0]["fullRender"]);
     const [isVideo, setIsVideo] = useState(false);
 
+    //Checks if skin has more levels but the level 1
+    //If true returns a button to display it */
     const SkinLevels = () => {
         return (
             <div className="skin-levels">
@@ -22,7 +25,6 @@ const Skin = ({ skinsMap }) => {
                                 onClick={() => {
                                     setIsVideo(true);
                                     setMedia(level["streamedVideo"]);
-                                    mediaRef.current.reload;
                                 }}
                             >
                                 {level["displayName"]}
@@ -36,6 +38,8 @@ const Skin = ({ skinsMap }) => {
         );
     };
 
+    //Checks if skin has more chromas but the base chroma
+    //If true returns a button to display it
     const SkinChromas = () => {
         return (
             <div className="skin-chromas">
@@ -66,7 +70,8 @@ const Skin = ({ skinsMap }) => {
                 <SkinLevels></SkinLevels>
                 <SkinChromas></SkinChromas>
             </div>
-            <div className="skin-media" ref={mediaRef}>
+            <div className="skin-media">
+                {/* Checks if the media is a video or img */}
                 {isVideo ? (
                     <video
                         controls

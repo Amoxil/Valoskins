@@ -4,6 +4,7 @@ import Card from "./Card";
 import List from "./List";
 
 const Armory = ({ skins }) => {
+    //Sets weapon's name as key
     let map = new Map();
     skins.map((skin) => {
         if (
@@ -13,6 +14,7 @@ const Armory = ({ skins }) => {
             map.set(skin["displayName"], skin["chromas"][0]["fullRender"]);
     });
 
+    //Weapon column order (1:1 from the game)
     let weaponsOrder = {
         1: ["Classic", "Shorty", "Frenzy", "Ghost", "Sheriff"],
         2: ["Stinger", "Spectre", "Bucky", "Judge"],
@@ -20,18 +22,17 @@ const Armory = ({ skins }) => {
         4: ["Marshal", "Operator", "Ares", "Odin"],
     };
 
-    let count = 0;
-
+    //For each column and for each weapon return a Card
     return (
         <div className="armory fade-in">
             {Object.keys(weaponsOrder).map((column) => {
                 return (
-                    <div className="armory-col" key={count++}>
+                    <div className="armory-col" key={`Col  ${column}`}>
                         {weaponsOrder[column].map((weapon) => {
                             return (
                                 <Card
                                     key={weapon}
-                                    img={map.get("Standard " + weapon)}
+                                    img={map.get(`Standard ${weapon}`)}
                                     link={weapon}
                                 ></Card>
                             );

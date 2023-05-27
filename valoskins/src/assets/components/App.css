@@ -3,6 +3,26 @@
     --secondary-color: #646cff;
     --background-color: #1a1a1a;
     --text-secondary: white;
+    color: var(--text-secondary);
+    background-color: var(--primary-color);
+}
+
+.light-mode {
+    --primary-color: white;
+    --secondary-color: #646cff;
+    --background-color: coral;
+    --text-secondary: #1a1a1a;
+}
+
+#main {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-secondary);
+    background-color: var(--primary-color);
 }
 
 #root {
@@ -13,6 +33,54 @@
     align-items: center;
     justify-content: center;
     animation: fadeIn 1s ease-in;
+}
+
+a {
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: inherit;
+}
+a:hover {
+    color: var(--secondary-color);
+}
+
+#light-mode {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    font-size: 2rem;
+    margin: 1rem;
+}
+
+body {
+    margin: 0;
+    place-items: center;
+    min-width: 320px;
+}
+
+h1 {
+    font-size: 3.2em;
+    line-height: 1.1;
+}
+
+button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: var(--background-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: border-color 0.25s;
+}
+button:hover {
+    border-color: var(--secondary-color);
+}
+button:focus,
+button:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
 }
 
 @keyframes fadeIn {
@@ -68,6 +136,7 @@ nav ul li:last-child {
 
 nav i {
     font-size: 2rem;
+    padding-left: 2rem;
 }
 
 footer {
@@ -213,7 +282,7 @@ img {
     background: transparent;
     cursor: pointer;
     transition: ease-out 0.5s;
-    border: 2px solid white;
+    border: 2px solid var(--text-secondary);
     border-radius: 10px;
     box-shadow: inset 0 0 0 0 var(--secondary-color);
 }

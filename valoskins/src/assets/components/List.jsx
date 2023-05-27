@@ -12,10 +12,14 @@ import XE from "../images/XE.png";
 
 const List = ({ skins }) => {
     const [searchText, setSearchText] = useState("");
-    const [page, setPage] = useState(1);
-    const itemsPerPage = 50;
-    let hasMore = true;
 
+    //Current page count
+    const [page, setPage] = useState(1);
+
+    //Cards to show per page
+    const itemsPerPage = 20;
+
+    //Binding tier image -> tier uuid
     const tiersUuid = [
         [SE, "12683d76-48d7-84a3-4e09-6985794f0445"],
         [DE, "0cebb8be-46d7-c12a-d306-e9907bfc5a25"],
@@ -24,14 +28,10 @@ const List = ({ skins }) => {
         [XE, "411e4a55-4e59-7757-41f0-86a53f101bb5"],
     ];
 
-    const [tiers, setTiers] = useState([
-        "12683d76-48d7-84a3-4e09-6985794f0445",
-        "0cebb8be-46d7-c12a-d306-e9907bfc5a25",
-        "60bca009-4182-7998-dee7-b8a2558dc369",
-        "e046854e-406c-37f4-6607-19a9ba8426fc",
-        "411e4a55-4e59-7757-41f0-86a53f101bb5",
-    ]);
+    //Array that contains the tiers to filter out
+    const [tiers, setTiers] = useState([]);
 
+    //Tier toggle from the filter array
     const handleTiers = (tier) => {
         if (tiers.includes(tier)) {
             const updatedArray = tiers.filter((item) => item !== tier);
@@ -41,14 +41,16 @@ const List = ({ skins }) => {
             setTiers(updatedArray);
         }
     };
+
     let params = useParams();
 
+    //Filters skins based on display name, if param === "All" display all
     skins = skins.filter((skin) => {
         if (
             !skin["displayName"]
                 .toLowerCase()
                 .includes(searchText.toLowerCase()) ||
-            !tiers.includes(skin["contentTierUuid"])
+            tiers.includes(skin["contentTierUuid"])
         )
             return false;
 
@@ -79,12 +81,15 @@ const List = ({ skins }) => {
                         <img
                             key={tier[0]}
                             src={tier[0]}
-                            className={tiers.includes(tier[1]) ? "" : "faded"}
+                            className={tiers.includes(tier[1]) ? "faded" : ""}
                             onClick={() => handleTiers(tier[1])}
                         ></img>
                     );
                 })}
             </div>
+
+            {/* Only page x itemsPerPage cards are displayed*/}
+            {/* Infinite scroll fires "next" function each time bottom is reached */}
 
             <InfiniteScroll
                 dataLength={

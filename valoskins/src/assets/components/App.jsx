@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
 import List from "./List";
 import Armory from "./Armory";
@@ -11,8 +11,13 @@ import Loader from "./Loader";
 import Home from "./Home";
 
 function App() {
+    //State of skins data and skin hashmap
     const [skins, setSkins] = useState([]);
     const [skinsMap, setSkinsMap] = useState(new Map());
+
+    const [lightMode, setLightMode] = useState(false);
+
+    //Location for the back button
     const location = useLocation();
 
     const navigate = useNavigate();
@@ -27,6 +32,7 @@ function App() {
         fetchData("https://valorant-api.com/v1/weapons/skins");
     }, []);
 
+    //Create new hashmap when skins change (in this case as soon as skins is available)
     useEffect(() => {
         let sMap = new Map();
 
@@ -38,7 +44,7 @@ function App() {
     }, [skins]);
 
     return (
-        <>
+        <div className={lightMode ? "light-mode" : ""} id="main">
             <nav>
                 <ul>
                     {location.pathname === "/" ? (
@@ -68,6 +74,15 @@ function App() {
                     </li>
                 </ul>
             </nav>
+
+            <FontAwesomeIcon
+                icon={faLightbulb}
+                id="light-mode"
+                onClick={() => {
+                    setLightMode(!lightMode);
+                }}
+            ></FontAwesomeIcon>
+
             <Routes>
                 <Route path="/" element={<Home />}></Route>
                 <Route
@@ -89,8 +104,17 @@ function App() {
                         )
                     }
                 ></Route>
+                <Route
+                    path="*"
+                    element={
+                        <>
+                            <h1>{"404"}</h1>
+                            <h1>{"There's nothing here"}</h1>
+                        </>
+                    }
+                />
             </Routes>
-        </>
+        </div>
     );
 }
 
