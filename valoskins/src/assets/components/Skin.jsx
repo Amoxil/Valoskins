@@ -8,6 +8,8 @@ const Skin = ({ skinsMap }) => {
     //Gets the uuid from the param and searches it in the hashmap
     const skin = skinsMap.get(params["uuid"]);
 
+    console.log(skin);
+
     //Sets the current media as the default skin
     const [media, setMedia] = useState(skin["chromas"][0]["fullRender"]);
     const [isVideo, setIsVideo] = useState(false);
@@ -65,25 +67,32 @@ const Skin = ({ skinsMap }) => {
 
     return (
         <div className="skin-wrapper fade-in">
-            <div className="skin-show">
-                <h1> {skin.displayName} </h1>
-                <SkinLevels></SkinLevels>
-                <SkinChromas></SkinChromas>
-            </div>
-            <div className="skin-media">
-                {/* Checks if the media is a video or img */}
-                {isVideo ? (
-                    <video
-                        controls
-                        autoPlay
-                        loop
-                        className="video-level fade-in"
-                        src={media}
-                        key={media}
-                    ></video>
-                ) : (
-                    <img src={media} key={media} className="fade-in" alt="" />
-                )}
+            <h1> {skin.displayName} </h1>
+            <div className="skin-content">
+                <div className="skin-show">
+                    <SkinLevels></SkinLevels>
+                    <SkinChromas></SkinChromas>
+                </div>
+                <div className="skin-media">
+                    {/* Checks if the media is a video or img */}
+                    {isVideo ? (
+                        <video
+                            controls
+                            autoPlay
+                            loop
+                            className="video-level fade-in"
+                            src={media}
+                            key={media}
+                        ></video>
+                    ) : (
+                        <img
+                            src={media}
+                            key={media}
+                            className="fade-in"
+                            alt=""
+                        />
+                    )}
+                </div>
             </div>
         </div>
     );

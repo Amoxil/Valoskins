@@ -4,11 +4,11 @@ import Card from "./Card";
 import { useParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import LazyList from "./LazyList";
-import SE from "../images/SE.png";
-import PE from "../images/PE.png";
-import DE from "../images/DE.png";
-import UE from "../images/UE.png";
-import XE from "../images/XE.png";
+import SE from "../images/tiers/SE.png";
+import PE from "../images/tiers/PE.png";
+import DE from "../images/tiers/DE.png";
+import UE from "../images/tiers/UE.png";
+import XE from "../images/tiers/XE.png";
 
 const List = ({ skins }) => {
     const [searchText, setSearchText] = useState("");
@@ -50,7 +50,8 @@ const List = ({ skins }) => {
             !skin["displayName"]
                 .toLowerCase()
                 .includes(searchText.toLowerCase()) ||
-            tiers.includes(skin["contentTierUuid"])
+            tiers.includes(skin["contentTierUuid"]) ||
+            skin["contentTierUuid"] === null
         )
             return false;
 
@@ -76,16 +77,20 @@ const List = ({ skins }) => {
                     onChange={(e) => setSearchText(e.target.value)}
                 />
                 <p> Tier filter: </p>
-                {tiersUuid.map((tier) => {
-                    return (
-                        <img
-                            key={tier[0]}
-                            src={tier[0]}
-                            className={tiers.includes(tier[1]) ? "faded" : ""}
-                            onClick={() => handleTiers(tier[1])}
-                        ></img>
-                    );
-                })}
+                <div className="tiers">
+                    {tiersUuid.map((tier) => {
+                        return (
+                            <img
+                                key={tier[0]}
+                                src={tier[0]}
+                                className={
+                                    tiers.includes(tier[1]) ? "faded" : ""
+                                }
+                                onClick={() => handleTiers(tier[1])}
+                            ></img>
+                        );
+                    })}
+                </div>
             </div>
 
             {/* Only page x itemsPerPage cards are displayed*/}

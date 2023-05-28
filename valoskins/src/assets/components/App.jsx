@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faLightbulb } from "@fortawesome/free-solid-svg-icons";
+import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
 import List from "./List";
 import Armory from "./Armory";
 import Skin from "./Skin";
 import Loader from "./Loader";
 import Home from "./Home";
+import ArmoryMobile from "./ArmoryMobile";
+import Navbar from "./Navbar";
 
 function App() {
     //State of skins data and skin hashmap
@@ -17,10 +19,8 @@ function App() {
 
     const [lightMode, setLightMode] = useState(false);
 
-    //Location for the back button
-    const location = useLocation();
-
-    const navigate = useNavigate();
+    //Check if is mobile
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
 
     const fetchData = async (url) => {
         const response = await fetch(url);
@@ -30,6 +30,19 @@ function App() {
 
     useEffect(() => {
         fetchData("https://valorant-api.com/v1/weapons/skins");
+    }, []);
+
+    //Handles the resize and refreshes isMobile value
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 767);
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
     }, []);
 
     //Create new hashmap when skins change (in this case as soon as skins is available)
@@ -45,35 +58,13 @@ function App() {
 
     return (
         <div className={lightMode ? "light-mode" : ""} id="main">
-            <nav>
-                <ul>
-                    {location.pathname === "/" ? (
-                        " "
-                    ) : (
-                        <li onClick={() => navigate(-1)}>
-                            <a>
-                                {" "}
-                                <FontAwesomeIcon icon={faArrowLeft} />{" "}
-                            </a>
-                        </li>
-                    )}
-
-                    <li onClick={() => navigate("/")}>
-                        <a> Home </a>
-                    </li>
-                    <li onClick={() => navigate("/Armory")}>
-                        <a> Armory </a>
-                    </li>
-                    <li onClick={() => navigate("/Armory/All")}>
-                        <a> All skins </a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/Amoxil">
-                            <i className="fa-brands fa-github"></i>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <div className="bg" />
+            <Navbar
+                isMobile={isMobile}
+                setLightMode={() => {
+                    setLightMode(!lightMode);
+                }}
+            ></Navbar>
 
             <FontAwesomeIcon
                 icon={faLightbulb}
@@ -87,7 +78,13 @@ function App() {
                 <Route path="/" element={<Home />}></Route>
                 <Route
                     path="/Armory"
-                    element={<Armory skins={skins} />}
+                    element={
+                        isMobile ? (
+                            <ArmoryMobile skins={skins} />
+                        ) : (
+                            <Armory skins={skins} />
+                        )
+                    }
                 ></Route>
                 <Route
                     exact
