@@ -31,7 +31,7 @@ const Home = () => {
                         render so it might take a few minutes to load.{" "}
                     </span>
                     Want to know your current in-game shop rotation? Check out
-                    <a href="https://valostore.onrender.com/"> ValoStore!</a>
+                    <a href="https://valostore.onrender.com/"> Valostore!</a>
                 </h3>
                 <img src={Jett} style={{ transform: "scale(1.5)" }}></img>
             </div>

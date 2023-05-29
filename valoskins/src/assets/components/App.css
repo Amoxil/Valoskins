@@ -211,7 +211,7 @@ button:focus-visible {
 }
 
 #root {
-    margin-top: 7vh;
+    margin-top: 3rem;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -237,10 +237,13 @@ a:hover {
     margin: 1rem;
 }
 
+/* NAVBAR */
+
 nav {
     display: flex;
     position: fixed;
     top: 0;
+    height: 3rem;
     align-items: center;
     background-color: var(--background-color);
     width: 100vw;
@@ -535,6 +538,10 @@ img {
         height: 20vw;
         width: 25vw;
         padding: 4vw;
+    }
+
+    .skin-list {
+        margin-bottom: 3rem;
     }
 
     /* SKIN PAGE */

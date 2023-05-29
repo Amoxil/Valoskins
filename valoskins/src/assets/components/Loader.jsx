@@ -1,4 +1,4 @@
-import Sheriff from "../../../public/Sheriff.gif";
+import Sheriff from "../images/loader/loader_image.gif";
 const Loader = () => {
     return (
         <>
